@@ -4,9 +4,11 @@ pipeline {
         MY_NAME = "Kevin"
     }
     parameters {
-        string(name: 'Name', 
-        defaultValue: 'whoever you are',
-        description: 'Who should I say hi to?')
+        string(
+			name: 'Name', 
+        	defaultValue: 'whoever you are',
+        	description: 'Who should I say hi to?'
+		)
     }
     
     stages {
@@ -23,7 +25,15 @@ pipeline {
                 unit: 'SECONDS')
             }
             input {
-                message "Should we continue?"
+                message "Which Version?"
+				ok "Deploy"
+				parameters {
+					choice(
+						name: 'APP_VERSION',
+						choices: "v1.1\nv1.2\nv1.3",
+						description: "What to deploy?"
+					)
+				}
             }
             steps {
                 echo 'Continuing with deployment'
